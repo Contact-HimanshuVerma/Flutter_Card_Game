@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flip_card/flip_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +14,6 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: appTitle,
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightBlue),
-      //   useMaterial3: true,
-      // ),
       home: Scaffold(
         appBar: AppBar(
           title: Padding(
@@ -49,31 +46,52 @@ class _TodoListState extends State<TodoList> {
     });
   }
 
+  void shuffleTodos() {
+    setState(() {
+      todos.shuffle();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter Card option',
-            ),
-            controller: _nameController,
-          ),
-          SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: addToDo,
-            child: Text('+ Add'),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter Card option',
+                  ),
+                  controller: _nameController,
+                ),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: addToDo,
+                child: Text('+ Add'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: shuffleTodos,
+                child: Text('Shuffle'),
+              ),
+            ],
           ),
           SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
               itemCount: todos.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(todos[index]),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: FlipCard(
+                    front: customCard("Click to Reveal"),
+                    back: customCard(todos[index]),
+                  ),
                 );
               },
             ),
@@ -82,4 +100,25 @@ class _TodoListState extends State<TodoList> {
       ),
     );
   }
+}
+
+Widget customCard(String title) {
+  return Material(
+    elevation: 5,
+    borderRadius: BorderRadius.circular(20),
+    color: Colors.blue,
+    child: Container(
+      height: 40,
+      width: 40,
+      alignment: Alignment.center,
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+  );
 }

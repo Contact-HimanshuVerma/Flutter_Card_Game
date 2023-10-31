@@ -9,14 +9,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = "To-Do List";
+    const appTitle = "Card Game";
 
     return MaterialApp(
       title: appTitle,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightBlue),
+      //   useMaterial3: true,
+      // ),
       home: Scaffold(
         appBar: AppBar(
           title: Padding(
@@ -52,20 +52,20 @@ class _TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: <Widget>[
           TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Enter a to-do item',
+              hintText: 'Enter Card option',
             ),
             controller: _nameController,
           ),
           SizedBox(height: 10),
           ElevatedButton(
             onPressed: addToDo,
-            child: Text('Add'),
+            child: Text('+ Add'),
           ),
           SizedBox(height: 20),
           Expanded(
